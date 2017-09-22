@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private final static String TAG = MainActivity.class.getSimpleName();
     private NewsListAdapter adapter;
     @BindView(R.id.listview)
-    protected ListView listViewBooks;
+    protected ListView listViewNews;
     private ArrayList<News> newsArrayList = null;
     private Integer position;
     private CheckNetwork checkNetwork;
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         outState.putSerializable("list", newsArrayList);
 
-        int position = listViewBooks.getVerticalScrollbarPosition();
+        int position = listViewNews.getVerticalScrollbarPosition();
 
         outState.putInt("position", position);
 
@@ -67,27 +67,19 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             flag = true;
 
-        } else {
-
-            if (checkNetwork.isNetworkAvailable())
-                showToast("internet connection is strong");
-                //controller.requestNewsListFromServer(20, "android");
-            else
-                showToast("No internet connection");
-
         }
 
         adapter = new NewsListAdapter(this, newsArrayList);
 
-        listViewBooks.setEmptyView(emptyListItem);
+        listViewNews.setEmptyView(emptyListItem);
 
-        listViewBooks.setAdapter(adapter);
+        listViewNews.setAdapter(adapter);
 
         if (flag) {
-            listViewBooks.smoothScrollToPosition(position);
+            listViewNews.smoothScrollToPosition(position);
         }
 
-        listViewBooks.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listViewNews.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 News news = adapter.getItem(position);
@@ -101,7 +93,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
-        getSupportLoaderManager().initLoader(1, null, this).forceLoad();
+
+        if (checkNetwork.isNetworkAvailable())
+            getSupportLoaderManager().initLoader(1, null, this).forceLoad();
+        else
+            showToast("No internet connection");
+
     }
 
 

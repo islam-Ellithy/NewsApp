@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone" />
 
-    <include layout="@layout/book_list_layout" />
+    <include layout="@layout/news_list_layout" />
 
 
 </LinearLayout>
