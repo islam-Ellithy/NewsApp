@@ -2,5 +2,5 @@
     <string name="app_name">NewsApp</string>
     <string name="search">Search</string>
     <string name="e_g_android">e.g android</string>
-    <string name="emptyList">There is no newses with that title</string>
+    <string name="emptyList">There is no news now</string>
 </resources>

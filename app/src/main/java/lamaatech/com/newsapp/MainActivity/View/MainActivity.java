@@ -87,8 +87,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 if (url != null) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(url));
-                    startActivity(intent);
+                    if (intent.resolveActivity(getPackageManager()) != null) {
+                        intent.setData(Uri.parse(url));
+                        startActivity(intent);
+                    }
                 }
             }
         });
