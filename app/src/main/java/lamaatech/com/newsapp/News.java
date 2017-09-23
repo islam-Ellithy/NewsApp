@@ -22,24 +22,12 @@ public class News implements Serializable {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
     public String getUrl() {
         return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public String getDate() {
@@ -53,9 +41,5 @@ public class News implements Serializable {
 
     public String getSection() {
         return section;
-    }
-
-    public void setSection(String section) {
-        this.section = section;
     }
 }

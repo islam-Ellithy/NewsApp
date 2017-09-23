@@ -16,9 +16,6 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
     private static final String TAG = NewsLoader.class.getSimpleName();
     private String topic;
 
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
 
     public NewsLoader(Context context, String newTopic) {
         super(context);
