@@ -3,4 +3,6 @@
     <string name="search">Search</string>
     <string name="e_g_android">e.g android</string>
     <string name="emptyList">There is no news now</string>
+    <string name="title_activity_setting">SettingActivity</string>
+    <string name="topic">Topic</string>
 </resources>

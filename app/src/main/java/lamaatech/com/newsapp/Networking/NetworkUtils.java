@@ -78,5 +78,4 @@ public class NetworkUtils {
         }
         return newsJsonStr;
     }
-
 }

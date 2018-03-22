@@ -1,5 +1,6 @@
 package lamaatech.com.newsapp.MainActivity.View;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,6 +8,9 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -22,6 +26,7 @@ import lamaatech.com.newsapp.Networking.CheckNetwork;
 import lamaatech.com.newsapp.Networking.NewsLoader;
 import lamaatech.com.newsapp.News;
 import lamaatech.com.newsapp.R;
+import lamaatech.com.newsapp.SettingActivity;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<News>> {
 
@@ -97,12 +102,36 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
         if (checkNetwork.isNetworkAvailable())
-            getSupportLoaderManager().initLoader(1, null, this).forceLoad();
+            getSupportLoaderManager().initLoader(1, new Bundle(), this).forceLoad();
         else
             showToast("No internet connection");
 
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        //respond to menu item selection
+
+        switch (id) {
+            case R.id.setting:
+                showToast("Settings");
+                startActivityForResult(new Intent(MainActivity.this, SettingActivity.class), 1);
+                break;
+        }
+
+        return true;
+    }
 
     private void showToast(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
@@ -111,7 +140,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<List<News>> onCreateLoader(int id, Bundle args) {
-        return new NewsLoader(MainActivity.this, "Android");
+
+
+        String topic = args.getString("topic", "android");
+
+
+        return new NewsLoader(MainActivity.this, topic);
     }
 
     @Override
@@ -124,5 +158,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(Loader<List<News>> loader) {
         Log.d(TAG, "OnReset");
         adapter.updateList(new ArrayList<News>());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+
+            showToast(data.getExtras().getString("topic"));
+            getSupportLoaderManager().restartLoader(1, data.getExtras(), this);
+
+        }
+
+
     }
 }
